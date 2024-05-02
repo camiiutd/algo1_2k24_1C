@@ -104,7 +104,7 @@ True
 λ> isPalindrome [1,2,4,8,16,8,4,2,1]
 True-}
 
-isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome :: (Ord a, Eq a) => [a] -> Bool
 isPalindrome [] = True
 isPalindrome [x] = True
 isPalindrome (x:xs) | myReverse (x:xs) == (x:xs) = True
@@ -169,20 +169,15 @@ Example in Haskell:
              'a', 'd', 'e', 'e', 'e', 'e']
 ["aaaa","b","cc","aa","d","eeee"]-}
 
-pack :: Eq a => [a] -> [a]
-pack [] = []
-pack (x:xs) = packaux x xs
-
-packaux :: Eq a => [a] -> a -> [a]
-packaux  (x:xs) y | x == y = x ++ xs
-                  | otherwise = packaux xs y
-
+pack :: (Eq a) => [a] -> [a]
+pack [x] = [x]
+pack (x:y:xs) | x == y = x:x:xs
+              | otherwise = x:pack xs
 --------
 {-Problem 10
 (*) Run-length encoding of a list.Solutions
  
-Use the result of Problem 9 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E.
-
+Use the result of Problem 9 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element 
 Example:
 
 * (encode '(a a a a b c c a a d e e e e))
@@ -192,3 +187,20 @@ Example in Haskell:
 λ> encode "aaaabccaadeeee"
 [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]-}
 
+-----
+
+{-Problem 14
+(*) Duplicate the elements of a list.Solutions
+ 
+Example:
+
+* (dupli '(a b c c d))
+(A A B B C C C C D D)
+Example in Haskell:
+
+λ> dupli [1, 2, 3]
+[1,1,2,2,3,3]-}
+
+dupli :: (Eq a) => [a] -> [a]
+dupli [] = []
+dupli (x:xs) = x:x:dupli xs
