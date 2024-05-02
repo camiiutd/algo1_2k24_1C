@@ -91,9 +91,14 @@ problema vallaMenosVencida (arquerosPorEquipo: seq<String X String>, goles: seq<
 	res es alguno de los arqueros de arquerosPorEquipo que menor goles recibió de acuerdo a goles
 	}-}
 
+
+minimo :: [Int] -> Int
+minimo (x:xs) | x <= minimo xs = x
+			  | otherwise = minimo xs
+
 vallaMenosVencida :: [(String, String)] -> [Int] -> String
-vallaMenosVencida [(nombre,_)] _ = nombre
-vallaMenosVencida ((nombre,nombrexs):xs) (g:gs) | g < head (g:gs) = nombre
-												| otherwise = vallaMenosVencida xs gs
+vallaMenosVencida ((p,v):[]) [] = p
+vallaMenosVencida ((p,v):xs) (g:gs) | minimo (g:gs) == g = p
+									| otherwise = vallaMenosVencida xs gs
 
 -- ejemplo d imput : vallaMenosVencida [("Juan", "Titular"), ("Pedro", "Suplente"), ("Carlos", "Titular")] [10, 8, 12]
