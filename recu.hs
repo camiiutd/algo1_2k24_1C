@@ -7,7 +7,7 @@ charANat a | esMin a = (ord a) - (ord 'a')
 natAChar :: Int -> Char
 natAChar n | 0 <= n && n <= 25 = chr ((ord 'a' )+n)
 natAChar1 :: Int -> Char
-natAChar1 n | (-25) <= n && n < 0 = chr ((ord 'z' )+n)
+natAChar1 n | (-25) <= n && n < 0 = chr ((ord 'z' ) - ((-n - 1) `mod` 26))
 
 {-1) Cantidad de caracteres en minúscula [2 puntos]
 problema cantMinuscula (mensaje: String) : Z {
@@ -49,10 +49,35 @@ desplazar ';' 2 devuelve ';'
 -}-}
 
 desplazar :: Char -> Int -> Char
-desplazar a n | a == natAChar n = a
-              | a == natAChar1 n = a
-              | otherwise = desplazarAux a n
+desplazar a n
+  | esMin a && 0 <= n && n <= 25 = natAChar (((charANat a + n) `mod` 26 + 26) `mod` 26)
+  | esMin a && -25 <= n && n < 0 = natAChar1 (((charANat a - n) `mod` 26 + 26) `mod` 26)
+  | otherwise = a
 
-desplazarAux :: Char -> Int -> Char
-desplazarAux x y | charANat x == y = x 
-                 | otherwise = desplazarAux x (y-1)
+
+{-4) Codificar mensaje [2 puntos]
+problema codificar (mensaje: String, n: Z) : String {
+  requiere: {0 <= n <= 25}
+  asegura: {res = versión codificada del mensaje, donde cada caracter en minúscula del mensaje se sustituye por la letra minúscula 
+  que se encuentra n posiciones más adelante en el alfabeto. Los caracteres que no son minúscula no se sustituyen.}
+}-}
+
+
+codificar :: String -> Int -> String
+codificar (x:xs) 0 = (x:xs)
+codificar [] _ = []
+codificar (x:xs) n | esMin x = desplazar x n : codificar xs n
+                   | otherwise = x : codificar xs n
+
+{-5) Decodificar mensaje [1 puntos]
+problema decodificar (mensaje: String, n: Z) : String {
+  requiere: {0 <= n <= 25}
+  asegura: {res = versión decodificada del mensaje, donde cada caracter en minúscula del mensaje se sustituye por la letra minúscula que se encuentra n posiciones más atrás en el alfabeto. 
+  Los caracteres que no son minúscula no se sustituyen.}
+-}
+
+decodificar :: String -> Int -> String
+decodificar (x:xs) 0 = (x:xs)
+decodificar [] _ = []
+decodificar (x:xs) n | esMin x = desplazar x (-n) : decodificar xs n
+                     | otherwise = decodificar xs n
