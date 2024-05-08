@@ -80,6 +80,9 @@ porcentajeDeGoles _ [] _ = 0
 porcentajeDeGoles arquero ((a,b):xs) (goles) | arquero == a = division (sum goles) 100 
 											 | otherwise = porcentajeDeGoles arquero xs goles 
 
+sum :: [Int] -> Int
+sum (x:xs) = 1 + sum (x:xs)
+
 ------4
 {-4) Valla Menos Vencida
 problema vallaMenosVencida (arquerosPorEquipo: seq<String X String>, goles: seq<Z>): String {

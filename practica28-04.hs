@@ -120,21 +120,10 @@ pasajevotos presi ((a,b):xs) votos  | presi == a = division votos 100
 --asegura : {res es el candidato a presidente de formulas m´as votado de acuerdo a los votos contabilizados en votos}
 --}
 
-cantidadDeVotos :: String -> [(String,String)] -> [Int] -> Int
-cantidadDeVotos _ [] _ = 0
-cantidadDeVotos presidente ((candidato,vice):xs) (votos:ys)
-    | presidente == candidato = votos
-    | otherwise = cantidadDeVotos presidente xs ys
-
-
-proximoPresidenteAux :: [(String,String)] -> [(String,String)] -> [Int] -> String
-proximoPresidenteAux ((candidato,vice):[]) _ _ = candidato
-proximoPresidenteAux ((candidato1,vice1):(candidato2,vice2):xs) formulas votos
-    | votosCandidato1 >= votosCandidato2 = proximoPresidenteAux ((candidato1,vice1):xs) formulas votos
-    | otherwise = proximoPresidenteAux ((candidato2,vice2):xs) formulas votos
-    where
-        votosCandidato1 = cantidadDeVotos candidato1 formulas votos
-        votosCandidato2 = cantidadDeVotos candidato2 formulas votos
+maximo :: [Int] -> Int
+maximo (x:xs) | x >= maximo xs = x 
+              | otherwise = maximo xs
 
 proximoPresidente :: [(String,String)] -> [Int] -> String
-proximoPresidente formulas votos = proximoPresidenteAux formulas formulas votos
+proximoPresidente (formulas:xs) (votos:ys) | maximo (votos:ys) == votos = formulas
+                                           | otherwise = proximoPresidente xs ys 

@@ -81,5 +81,46 @@ asegura: {resultado = sumarN(s[|s| − 1], s) }
 Por ejemplo sumarElUltimo [1,2,3] da [4,5,6]
 -}
 
-sumarElUltimo :: [Integer] -> [Integer]
-sumarElUltimo 
+sumarN :: Int -> [Int] -> [Int]
+sumarN _ [] = []  
+sumarN x (y:ys) = (x+y) : sumarN x ys
+
+ultimo :: [t] -> t
+ultimo (x:[]) = x
+ultimo (x:xs) = ultimo xs
+
+sumarElUltimo :: [Int] -> [Int]
+sumarElUltimo [] = []
+sumarElUltimo (x:xs) = sumarN (ultimo xs) (x:xs)
+
+-----
+{-e) aplanar :: [[Char]] -> [Char], que a partir de una lista
+ de palabras arma una lista de caracteres concaten´andolas.-}
+
+aplanar :: [[Char]] -> [Char]
+aplanar [] = []
+aplanar (x:xs) = x ++ aplanar xs
+
+--
+{-aplanarConBlancos :: [[Char]] -> [Char], que
+ a partir de una lista de palabras, arma una lista de caracteres
+concaten´andolas e insertando un blanco entre cada palabra.
+-}
+
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos [] = []
+aplanarConBlancos (x:xs) = x ++ " " ++ aplanarConBlancos xs
+
+--
+{-g) aplanarConNBlancos :: [[Char]] -> Integer -> [Char], que a
+ partir de una lista de palabras y un entero n,
+arma una lista de caracteres concaten´andolas e
+ insertando n blancos entre cada palabra (n debe ser no negativo).-}
+
+aplanarConNBlancos :: [[Char]] -> Int -> [Char]
+aplanarConNBlancos [] _ = []
+aplanarConNBlancos (x:xs) n = x ++ sumnBlancos n ++ aplanarConNBlancos xs n
+
+sumnBlancos :: Int -> [Char]
+sumnBlancos 1 = " "
+sumnBlancos n = " " ++ sumnBlancos (n-1)
