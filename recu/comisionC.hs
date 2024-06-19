@@ -70,11 +70,24 @@ problema listaDeAmigos (lista: seq⟨Z⟩) : seq⟨Z x Z⟩{
 }
 --}
 
-perteneceAmigos :: [Int] -> Bool
-perteneceAmigos [] = False
-perteneceAmigos (x:xs) | sumaLista (divisoresPropios x) 
 
 
 listaDeAmigos :: [Int] -> [(Int,Int)]
 listaDeAmigos [] = []
-listaDeAmigos 
+listaDeAmigos (n:ns) | pertenece (sumaLista (divisoresPropios n)) ns = (n,elAmigo) : listaDeAmigos ns
+                     | otherwise= listaDeAmigos ns
+                     where elAmigo = (sumaLista (divisoresPropios n))
+
+pertenece :: Int -> [Int] -> Bool
+pertenece _ [] = False
+pertenece n (x:xs) | n == x = True
+                   | otherwise= pertenece n xs
+
+-- listaAmigosAux ::  [Int] -> Bool
+-- listaAmigosAux _ [] =False
+-- listaAmigosAux  (x:xs) = pertenece (sumaLista (divisoresPropios x) ) xs
+
+-- listaAux :: Int -> [Int] -> Int
+-- listaAux _ [] =0
+-- listaAux n (x:xs) | n == x = x
+--                   | otherwise= listaAux n xs

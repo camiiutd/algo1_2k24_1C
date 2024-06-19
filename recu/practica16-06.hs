@@ -46,15 +46,14 @@ separoString (palabra:xs) = head (palabra:xs) : separoString xs
 
 aproboMasDeNMaterias :: [([Char], [Int])]-> [Char] ->Int-> Bool
 aproboMasDeNMaterias [] _ _ = False
-aproboMasDeNMaterias (registro:xs) alumno n | alumno == fst registro && condicionmayoracuatro (snd registro) >= 4 = True
-                                            | alumno == fst registro && condicionmayoracuatro (snd registro) < 4 =False
+aproboMasDeNMaterias (registro:xs) alumno n | alumno == fst registro &&  (n >= (condicionmayoracuatro (snd registro))) ==True = True
+                                            | alumno == fst registro &&  (n < (condicionmayoracuatro (snd registro))) == False =False
                                             | otherwise = aproboMasDeNMaterias xs alumno n
 
 condicionmayoracuatro :: [Int] -> Int
 condicionmayoracuatro [] = 0
 condicionmayoracuatro (x:xs) | x >= 4 = 1 + condicionmayoracuatro xs
                              | otherwise= condicionmayoracuatro xs 
-
 
 --2
 sumanotas :: [Int] -> Int
@@ -88,7 +87,7 @@ mejorpromedio (registro:registro2:xs) | promedioNotas (snd registro) >= promedio
 
 
 --4
-perteneceBuenosAlumnos:: [([Char], [Int])] -> [Char] -> Bool
+{-perteneceBuenosAlumnos:: [([Char], [Int])] -> [Char] -> Bool
 perteneceBuenosAlumnos [] _ =False
 perteneceBuenosAlumnos (registro:xs) nombre | fst registro == nombre && promedioNotas (snd registro) >= 8 && aplazos (snd registro) == False = True
                                             | otherwise = perteneceBuenosAlumnos xs nombre
@@ -101,6 +100,31 @@ mejorPnumerito (registro:registro2:xs) | promedioNotas (snd registro) >= promedi
 seGraduoConHonores :: [([Char], [Int])] -> Int -> [Char] -> Bool
 seGraduoConHonores [] _ _ = False
 seGraduoConHonores (registro:xs) n alumno | aproboMasDeNMaterias (registro:xs) alumno n == True && perteneceBuenosAlumnos (registro:xs) alumno == True && (mejorPnumerito (registro:xs)) < (promedioNotas (snd registro))+1 = True
+                                          | otherwise = seGraduoConHonores xs n alumno}
+
+--seGraduoConHonores [("Juan", [6, 8, 9]), ("Ana", [10, 9, 8]), ("Luis", [5, 4, 7]), ("Maria", [10, 10, 10]), ("Jose", [7, 6, 6]), ("Laura", [9, 9, 9, 4])] 2 "Ana"-}
+
+seGraduoConHonores :: [([Char], [Int])] -> Int -> [Char] -> Bool
+seGraduoConHonores [] _ _ = False
+seGraduoConHonores registro n alumno | aproboMasDeNMaterias registro alumno (n - 1)  == True && perteneceBuenosAlumnos alumno (buenosAlumnos registro) && menorEstricto alumno registro = True
                                           | otherwise = seGraduoConHonores xs n alumno
 
---seGraduoConHonores [("Juan", [6, 8, 9]), ("Ana", [10, 9, 8]), ("Luis", [5, 4, 7]), ("Maria", [10, 10, 10]), ("Jose", [7, 6, 6]), ("Laura", [9, 9, 9, 4])] 2 "Ana"
+perteneceBuenosAlumnos :: [Char]-> [[Char]] -> Bool
+perteneceBuenosAlumnos _ [] = False
+perteneceBuenosAlumnos alumno (x:xs) | alumno == x = True
+                                     | otherwise= perteneceBuenosAlumnos alumno xs
+
+menorEstricto :: [Char]-> [([Char], [Int])] -> Bool
+menorEstricto [] _ =False
+menorEstricto _ [] = False
+menorEstricto nombre (registro:xs) | mejorpromedio (registro:xs) == nombre = False
+                                   | mejorpromedio (registro:xs) /=nombre && promedioNotas (snd registro) < mejorpromedioNota (registro:xs) = True
+                                   | otherwise= menorEstricto nombre xs
+
+mejorpromedioNota :: [([Char], [Int])]->Int
+mejorpromedioNota [] = 0
+mejorpromedioNota [registro] = promedioNotas (snd registro)
+mejorpromedioNota (registro:registro2:xs) | promedioNotas (snd registro) >= promedioNotas (snd registro2) = mejorpromedioNota (registro:xs)
+                                          | otherwise = mejorpromedioNota (registro2:xs)
+
+mpromedio:: 
