@@ -106,8 +106,7 @@ seGraduoConHonores (registro:xs) n alumno | aproboMasDeNMaterias (registro:xs) a
 
 seGraduoConHonores :: [([Char], [Int])] -> Int -> [Char] -> Bool
 seGraduoConHonores [] _ _ = False
-seGraduoConHonores registro n alumno | aproboMasDeNMaterias registro alumno (n - 1)  == True && perteneceBuenosAlumnos alumno (buenosAlumnos registro) && menorEstricto alumno registro = True
-                                          | otherwise = seGraduoConHonores xs n alumno
+seGraduoConHonores registro n alumno = aproboMasDeNMaterias registro alumno (n - 1)  == True && perteneceBuenosAlumnos alumno (buenosAlumnos registro) && promedioFloat registro 
 
 perteneceBuenosAlumnos :: [Char]-> [[Char]] -> Bool
 perteneceBuenosAlumnos _ [] = False
@@ -127,4 +126,7 @@ mejorpromedioNota [registro] = promedioNotas (snd registro)
 mejorpromedioNota (registro:registro2:xs) | promedioNotas (snd registro) >= promedioNotas (snd registro2) = mejorpromedioNota (registro:xs)
                                           | otherwise = mejorpromedioNota (registro2:xs)
 
-mpromedio:: 
+promedioFloat :: [([Char], [Int])] -> Float
+promedioFloat [] = 0.0
+promedioFloat n = fromIntegral (sumanotas n) / fromIntegral (qNotas n)
+

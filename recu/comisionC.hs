@@ -1,4 +1,3 @@
-
 {--El Departamento de Matemática (DM) de la FCEyN-UBA nos ha encargado que desarrollemos un sistema para el
 tratamiento de números naturales. Específicamente les interesa conocer cuándo un número es perfecto y
 cuándo dos números son amigos. Aunque por ahí no lo sabías, estos conceptos existen y se definen como:
