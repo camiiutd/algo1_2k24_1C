@@ -1,3 +1,4 @@
+import Distribution.Types.IncludeRenaming (IncludeRenaming)
 type Fila = [Int]
 type Tablero = [Fila]
 type Posicion = (Int,Int)
@@ -70,14 +71,15 @@ problema valoresDeCamino (t: Tablero, c: Camino) : seq⟨Z⟩ {
   asegura: {res es igual a la secuencia de números que están en el camino c, ordenados de la misma forma que aparecen las posiciones correspondientes en el camino.}
 }-}
 
-valoresDeCamino :: Tablero -> Camino -> [Int]
+-- valoresDeCamino :: Tablero -> Camino -> [Int]
 
+concatL :: [[Int]] -> [Int]
+concatL [] = []
+concatL (x:xs) = x ++ concatL xs
 
-aplanadorTupla :: [(Int,Int)] -> [Int]
-aplanadorTupla [] = []
-aplanadorTupla ((a,b):xs) = a : b : aplanadorTupla xs
+longitud :: [Int] -> Int
+longitud [] = 0
+longitud (x:xs) = 1 + longitud xs
 
-aplanadorTabla :: [[Int]] -> [Int]
-aplanadorTabla [] = []
-aplanadorTabla (x:xs) = x ++ aplanadorTabla xs
-
+buscoTablero :: Int -> [Int] -> Int
+buscoTablero x (y:ys)|
