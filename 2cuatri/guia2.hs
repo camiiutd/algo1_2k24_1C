@@ -5,8 +5,11 @@ duplicar x = 2*x
 raizCuadrada :: Int -> Float
 raizCuadrada x = sqrt(fromIntegral x)
 --c
--- enteroMasCercanoPositivo :: Float->Int
--- enteroMasCercanoPositivo x = x / 10
+enteroMasCercanoPositivo :: Float->Int
+enteroMasCercanoPositivo x | x < 0 || x< 0.5 = 0
+                           | x<1= 1
+                           | otherwise = 1 + enteroMasCercanoPositivo (x-1)
+                           
 
 --d
 raicesCuadradasUno:: [Int]->[Float]
@@ -20,13 +23,13 @@ raicesCuadradasCuatro (x:xs) | x > 0 = raizCuadrada x : raicesCuadradasCuatro xs
                              | otherwise= (fromIntegral x) : raicesCuadradasCuatro xs
 
 --h
--- raicesCuadradasCinco :: [Int] -> [Float]
--- raicesCuadradasCinco [] = []
--- raicesCuadradasCinco (x:xs) | 
+raicesCuadradasCinco :: [Int] -> [Float]
+raicesCuadradasCinco [] = []
+raicesCuadradasCinco (x:xs) | 
 
--- sumoPos :: [Int] -> Int
--- sumoPos [] = 0
--- sumoPos (x:xs)= 1 + sumoPos xs
+sumoPos :: [Int] -> Int
+sumoPos [] = 0
+sumoPos (x:xs)= 1 + sumoPos xs
 
 --ej 5
-cantidadColectivosLinea 
+-- cantidadColectivosLinea 
