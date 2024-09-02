@@ -73,13 +73,24 @@ problema valoresDeCamino (t: Tablero, c: Camino) : seq⟨Z⟩ {
 
 -- valoresDeCamino :: Tablero -> Camino -> [Int]
 
-concatL :: [[Int]] -> [Int]
-concatL [] = []
-concatL (x:xs) = x ++ concatL xs
+buscoColumna :: [Int] -> Int -> Int
+buscoColumna (x:xs) 0 = x
+buscoColumna (x:xs) columna = buscoColumna xs (columna-1)
 
-longitud :: [Int] -> Int
-longitud [] = 0
-longitud (x:xs) = 1 + longitud xs
 
-buscoTablero :: Int -> [Int] -> Int
-buscoTablero x (y:ys)|
+
+
+-- --Ejercicio 4 (2 puntos)
+-- problema esCaminoFibo (s: seq⟨Z⟩, i: Z) : Bool {
+--   requiere: {La secuencia de números s es no vacía y está compuesta por números positivos (mayor estricto que 0) que representan los valores de un camino en un tablero}
+--   requiere: {i >= 0}
+--   asegura: {res = true <=> los valores de s son la sucesión de Fibonacci inicializada con el número pasado como parámetro i}
+-- }
+-- Notas:
+-- En este ejercicio se pasa una secuencia de valores en lugar de un tablero y un camino para no generar dependencia con el ejercicio anterior.
+-- Recordemos que la sucesión de Fibonacci está definida con la siguiente función recursiva:
+-- f(0) = 0
+-- f(1) = 1
+-- f(n) = f(n-1) + f(n-2) con n>1
+-- En el ejemplo del tablero y del camino (verde claro) que figuran más arriba tenemos que esCaminoFibo [1,1,2,3,5] 1 reduce a True.
+
