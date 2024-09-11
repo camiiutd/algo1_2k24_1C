@@ -39,10 +39,34 @@ todosDigitosIguales n | n<10= True
 --7
 
 iesimoDigito :: Integer -> Integer -> Integer
-iesimoDigito n k = mod (div n 10^((cantDigitos (fromInteger n)-k)) 10)
+iesimoDigito n k = mod (div n (10^(cantDigitos n-  k))) 10
 
-cantDigitos :: Float -> Integer 
+cantDigitos :: Integer -> Integer 
 cantDigitos 0=1
-cantDigitos n | n/10 >1 = 1 + cantDigitos (n/10)
-              | n <1 && n >0 = 1 + cantDigitos n
-              | otherwise= 1
+cantDigitos n | div n 10 >1 = 1 + cantDigitos (div n 10)
+              |n <1 && n >0 = 1
+
+--8
+sumaDigitos :: Integer -> Integer 
+sumaDigitos n | div n 10 == 0 = n
+              | otherwise=mod n 10 + sumaDigitos (div n 10)
+
+--9
+esCapicua :: Integer -> Bool
+esCapicua n | div n 10 ==0 = True
+            | n < 100 && div n 10 /= mod n 10 = False
+            | otherwise= esCapicua (div n 10)
+
+--10
+f1 :: Integer -> Integer 
+f1 n | n == 0 = 1 
+     | otherwise= 2^n + f1 (n-1)
+
+f2 :: Integer -> Float -> Float
+f2 n q | q==1 = fromInteger n
+       | otherwise= q^n + f2 n (q-1)
+
+f3 :: Integer -> Float -> Float 
+f3 n q | n==0 = 1
+       | n == 1 = fromInteger (2*n)
+       | otherwise= q^(2*n) + f3 (n-1) q
