@@ -27,7 +27,7 @@ pertenece (x:xs) n | fst x == n = True
                    | otherwise= pertenece xs n 
 
 -- [("hola",3),("aa",2),("eeee",1),("ee",1)] [("hola",4.0),("aa",2.0),("eeee",10.0),("ee",3.0)] 
--- [("hola",3),("ee",1),("aa",2),("eeee",1)] [("eeee",10.0),("hola",4.0),("ee",3.0),("aa",2.0)] 
+-- [("hola",3),("ee",1),("aa",20),("eeee",1)] [("eeee",10.0),("hola",4.0),("ee",3.0),("aa",2.0)] 
 --3
 dineroEnStock :: [(String,Int)] -> [(String,Float)] -> Float
 dineroEnStock [] [] = 0
@@ -52,5 +52,10 @@ perteneceTupla2 x (y:ys) | fst x == fst y = y
 aplicarOferta :: [(String,Int)] -> [(String, Float)]-> [(String,Float)]
 aplicarOferta [] _ = []
 aplicarOferta _ [] = []
-aplicarOferta (x:xs) (y:ys) | snd x > 10= (fst x, (perteneceTupla2 x *0.80) : aplicarOferta xs (y:ys)
-                            | snd x <=10 = (fst x, perteneceTupla2 (snd y)) : aplicarOferta xs (y:ys)
+aplicarOferta (x:xs) (y:ys) | snd x > 10= (fst x, (snd ((perteneceTupla2 x  (y:ys))))*0.80) : aplicarOferta xs (y:ys)
+                            | snd x <=10 = (fst x, (snd(perteneceTupla2 x  (y:ys)))) : aplicarOferta xs (y:ys)
+
+--SOPA DE NÙMEROS--
+
+--1
+maximo :: 
