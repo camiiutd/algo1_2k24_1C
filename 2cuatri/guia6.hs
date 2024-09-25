@@ -113,3 +113,56 @@ agarroLaColumna [] _ = 0
 agarroLaColumna (x:xs) (a,b) | b == 1= x
                              | otherwise= agarroLaColumna xs (a,(b-1))
 
+--8
+esCaminoFibo :: [Int] -> Int -> Bool
+esCaminoFibo [] _ = True
+esCaminoFibo (x:xs) n | fibonacci n == x = esCaminoFibo xs (n+1) 
+                      |otherwise= False
+
+fibonacci :: Int -> Int
+fibonacci 0=0
+fibonacci 1=1
+fibonacci n = fibonacci (n-1) + fibonacci (n-2)
+
+--PERFECTOS AMIGOS--
+--9
+divisoresPropios:: Int -> [Int]
+divisoresPropios n = divisores n 1
+
+divisores :: Int -> Int ->[Int]
+divisores n k| k == n = []
+             | mod n k==0= k : divisores n (k+1)
+             | otherwise= divisores n (k+1)
+
+--10
+sonAmigos :: Int ->Int->Bool
+sonAmigos n m = sumoLista (divisoresPropios n) == m && sumoLista (divisoresPropios m ) == n
+
+sumoLista :: [Int] ->Int
+sumoLista [] =0
+sumoLista (x:xs) =x + sumoLista xs 
+
+--11
+losPrimerosNPerfectos :: Int -> [Int]
+losPrimerosNPerfectos n = perfectos n 1
+
+perfectos :: Int -> Int -> [Int]
+perfectos n k  | n ==0=[]
+               | sumoLista (divisoresPropios k) == k = k : perfectos (n-1) (k+1) 
+               | otherwise=perfectos n (k+1)
+
+--12
+listaDeAmigos :: [Int] -> [(Int,Int)]
+listaDeAmigos [] = [] 
+listaDeAmigos (x:xs) | perteneceLista xs (sumoLista (divisoresPropios x) ) = (x,(sumoLista (divisoresPropios x) ) ) : (listaDeAmigos (eliminoEle xs x)  )               
+                     | otherwise= listaDeAmigos (eliminoEle xs x)
+
+eliminoEle :: [Int] -> Int-> [Int]
+eliminoEle [] _ = []
+eliminoEle (x:xs) m | m == x= eliminoEle xs m 
+                    | otherwise= x : eliminoEle xs m 
+
+perteneceLista :: [Int] -> Int -> Bool
+perteneceLista [] _ = False
+perteneceLista (x:xs) n | n ==x = True
+                        |otherwise=perteneceLista xs n 
