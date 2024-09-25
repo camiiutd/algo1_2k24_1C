@@ -57,5 +57,59 @@ aplicarOferta (x:xs) (y:ys) | snd x > 10= (fst x, (snd ((perteneceTupla2 x  (y:y
 
 --SOPA DE NÙMEROS--
 
---1
-maximo :: 
+--5
+maximo :: [[Int]] -> Int
+maximo [] = 0
+maximo (x:xs) | maximoaux x >= maximo xs = maximoaux x 
+              | otherwise= maximo xs 
+
+maximoaux :: [Int] ->Int
+maximoaux [] = 0
+maximoaux [x]=x
+maximoaux (x:xs) | x >= maximoaux xs = x 
+                 | otherwise= maximoaux xs
+
+-- [[1,2,4],[3,2,],[4,3,6],[1,4,2]]
+
+--6
+masRepetido :: [[Int]] ->Int
+masRepetido [] = 0
+masRepetido x = juntoTodito (aplanar x)
+
+aplanar :: [[Int]] -> [Int] 
+aplanar [] = []
+aplanar (x:xs) = x ++ aplanar xs
+
+contador :: [Int] -> Int -> Int
+contador [] _ =0
+contador (x:xs) n | n == x = 1 + contador xs n
+                  | otherwise= contador xs n
+
+eliminorepetidos :: [Int] -> Int -> [Int]
+eliminorepetidos [] _ = []
+eliminorepetidos (x:xs) n | n == x = xs
+                          | otherwise= x : (eliminorepetidos xs n)
+
+juntoTodito :: [Int] ->Int
+juntoTodito [] =0
+juntoTodito [x] =x
+juntoTodito (x:xs) | contador (x:xs) x >= contador xs (juntoTodito xs) = x
+                   | otherwise= juntoTodito (eliminorepetidos (x:xs) x)
+
+--7
+valoresDeCamino :: [[Int]] ->[(Int,Int)] -> [Int]
+valoresDeCamino [] _ =[]
+valoresDeCamino _ [] = []
+valoresDeCamino x ((a,b):xs) = [(agarroLaColumna (voyBorrandoFilas x (a,b)) (a,b))] ++ valoresDeCamino x xs 
+
+voyBorrandoFilas :: [[Int]] ->(Int,Int) -> [Int]
+voyBorrandoFilas [] _ = []
+voyBorrandoFilas [x] _ = x
+voyBorrandoFilas (x:xs) (a,b) | a ==1= x
+                              | otherwise= voyBorrandoFilas xs ((a-1),b)
+
+agarroLaColumna :: [Int] -> (Int,Int) -> Int
+agarroLaColumna [] _ = 0
+agarroLaColumna (x:xs) (a,b) | b == 1= x
+                             | otherwise= agarroLaColumna xs (a,(b-1))
+
