@@ -140,3 +140,23 @@ def viajetiempo(partida:int,llegada:int) -> None:
         llegada+=1
         print("Viajó",i,"años estamos en el año",llegada)
 
+def viaje_tiempo20(partida:int)->None:
+    for i in range(partida,-384,-20):
+        i+=1
+        print("VIAJASTE 20 AÑOS, ESTAMOS EN",i)
+
+# print(viaje_tiempo20(2024))
+
+# 8
+def ej_1()->None:
+    x=5
+    y=7
+    return x+y
+
+def ej_2(x:int,y:int,z:int)->bool:
+    if z==x+y and y== z*2:
+        return True
+    else:
+        return False
+
+#me pudri
