@@ -36,3 +36,10 @@ def minimo(s:list[int])-> int:
         else:
             continue
     return minimo
+
+def ordenados(s:list[int])->bool:
+    for e in range(len(s)-1):
+        if s[e] >= s[e+1]:
+            return False
+    return True
+
