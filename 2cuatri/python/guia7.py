@@ -346,19 +346,77 @@ def tironombres()->list[str]:
     
 #7.2
 def sube():
-    razon=input("que queres hacer: ")
-    monto=input("monto: ")
     res=[]
     while True:
-        if razon != "listo" or razon != "":
-            res.append(tuple(razon,int(monto)))
-        else:
+        accion=input("Ingrese acción (C,D,X): ")
+        if accion=="C" or accion=="D":
+            monto:int=int(input("Ingrese monto --> "))
+            res.append((accion,monto))
+        elif accion == "X":
             break
-    
+        else:
+            print("Ingrese una acción permitida")
     return res
 
-print(sube())
+#7.3
+import numpy as np
+import random
 
+def sieteymedio():
+    hist:list[int]=[]
+    contador:int=0
+    while contador <= 7.5:
+        accion=input("Saca carta? (SI o NO): ")
+        if accion=="SI":
+            numero=random.randint(1,12)
+            if numero==10 or numero==11 or numero==12:
+                contador+=0.5
+                hist.append(0.5)
+            elif numero==8 or numero==9:
+                continue
+            else:
+                contador+=numero
+                hist.append(numero)
+        elif accion=="NO":
+            print("Zafaste, tenes ",contador)
+            break
+        else:
+            print("INGRESE SOLO SI O NO!!!!!!!!!")
+    if contador > 7.5:
+        print("Perdiste tenes",contador)
+
+    return hist 
+
+#7.4
+def pertenec(l:list,n):
+    for e in l:
+        if e ==n:
+            return True
+    return False
+
+def contrasenia()->str:
+    mayusculas="QWERTYUIOPASDFGHJKLZXCVBNM"
+    minusculas="qwertyuiopasdfghjklzxcvbnm"
+    numeros="0123456789"
+    mayu:bool=False
+    minu:bool=False
+    num:bool=False
+    contra=input("Ingrese una contraseña: ")
     
+    for c in contra:
+        if pertenec(mayusculas, c):
+            mayu = True
+        elif pertenec(minusculas, c):
+            minu = True
+        elif pertenec(numeros, c):
+            num = True
+
+    if mayu and num and minu and len(contra) >=8:
+        return "VERDE"
+    elif len(contra) < 5:
+        return "ROJO"
+    else:
+        return "AMARILLO"
 
 
+print(contrasenia())
