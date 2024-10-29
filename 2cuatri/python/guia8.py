@@ -103,20 +103,64 @@ def splits(string,limitador):
             res=""
     return l
     
-    
-
 def pertenece(s:str,m:str)-> bool:
     for c in s:
         if c==m:
             return True
     return False
 
-a=Pila()
-a.put(("a",5))
-a.put(("e",4))
-a.put(("p",8))
-print(buscar_nota_maxima(a))
+def intercalar(p1:Pila,p2:Pila)->Pila:
+    pila_aux:Pila=Pila()
+    p1recupero:Pila=Pila()
+    p2recupero:Pila=Pila()
+    while not p1.empty() and not p2.empty() :
+        a=p1.get()
+        pila_aux.put(a)
+        p1recupero.put(a)
+        b=p2.get()
+        pila_aux.put(b)
+        p2recupero.put(b)
 
-print(splits("hola aa a a"," "))
+    while not p1recupero.empty():
+        p1.put(p1recupero.get())
 
-print(evaluar_expresion("3 4 + 5 * 2 -"))
+    while not p2recupero.empty():
+        p2.put(p2recupero.get())
+
+    return pila_aux
+
+
+# p1 = Pila()
+# p1.put(1)
+# p1.put(2)
+# p1.put(3)
+
+# p2 =Pila()
+# p2.put(3)
+# p2.put(2)
+# p2.put(1)
+
+# print(intercalar(p1,p2))
+
+# a=Pila()
+# a.put(("a",5))
+# a.put(("e",4))
+# a.put(("p",8))
+# print(buscar_nota_maxima(a))
+
+# print(splits("hola aa a a"," "))
+
+# print(evaluar_expresion("3 4 + 5 * 2 -"))
+
+#COLAS
+#8
+from queue import Queue as Cola
+
+def generar_nros_al_azar(cantidad:int,desde:int,hasta:int)->Cola[int]:
+    c=Cola()
+    while cantidad >0:
+        c.put(np.random.randint(desde,hasta))
+        cantidad-=1
+    return c
+
+c=generar_nros_al_azar(5,1,10)
