@@ -287,10 +287,53 @@ def jugar_carton_de_bingo(carton:list[int],bolillero:Cola[int])->int:
     
     return contador
 
+def n_pacientes_urgentes(c:Cola[tuple[int,str,str]])-> int:
+    contador:int=0
+    col:Cola=Cola()
+    while not c.empty():
+        a=c.get()
+        col.put(a)
+        b=a[0]
+        if pertenece([1,2,3],b):
+            contador+=1
+    
+    while not col.empty():
+        c.put(col.get())
+
+    return contador
+
+def atencion_a_clientes(c:Cola[tuple[str,int,bool,bool]])->Cola[tuple[str,int,bool,bool]]:
+    col:Cola=Cola()
+    res:Cola=Cola()
+    p:list=[]
+    p2=[]
+    p3=[]
+    while not c.empty():
+        a=c.get()
+        col.put(a)
+        prio=a[3]
+        pref=a[2]
+        if prio==True:
+            p.append(a)
+        elif pref==True:
+            p2.append(a)
+        else:
+            p3.append(a)
 
 
+    for e in p:
+        res.put(e)
+    for i in p2:
+        res.put(i)
+    for n in p3:
+        res.put(n)
 
+    while not col.empty():
+        c.put(col.get())
 
+    return res            
+
+        
 
 c1=Cola()
 c1.put(1)
