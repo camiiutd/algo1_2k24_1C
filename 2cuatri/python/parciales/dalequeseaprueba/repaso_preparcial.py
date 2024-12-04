@@ -59,3 +59,35 @@ def creo_matriz(l:list[int])->list[list[int]]:
 
     return matriz
 
+#4
+def resolver_cuenta(s:str)->float:
+    operacion:int=1
+    numero_acumulado=0
+    parte_decimal=0
+    enterolisto=False
+    res=0
+    for n in s:
+        if n=='+' or n=='-':
+            res += float(str(numero_acumulado)+'.'+str(parte_decimal)) * operacion
+            numero_acumulado=0
+            parte_decimal=0
+            enterolisto=False
+    
+            if n == "+":
+                operacion=1
+            elif n == "-":
+                operacion=-1
+        elif n == ".":
+            enterolisto = True
+        elif enterolisto==True:
+            parte_decimal = parte_decimal * 10 + int(n)
+        else:
+            numero_acumulado = numero_acumulado * 10 + int(n)
+
+    res+=float(str(numero_acumulado)+'.'+str(parte_decimal))  * operacion
+
+    return res
+
+
+
+        
